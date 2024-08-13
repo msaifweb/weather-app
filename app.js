@@ -1,21 +1,30 @@
-const apiKey = "71c735d4f2cf841c0af89d021c79e2a0"; // Replace with your OpenWeatherMap API key
-const cityName = "Kasur,pakistan"; // Replace with the city and country you want to search for
+const apiKey = "71c735d4f2cf841c0af89d021c79e2a0";
 
-// Step 1: Make the current weather API request
-const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric&lang=en`;
+// Add an event listener to the search button
+document.getElementById("search-button").addEventListener("click", () => {
+  const cityName = document.getElementById("city-input").value.trim();
 
-fetch(weatherUrl)
-  .then((response) => {
-    if (!response.ok) {
-      throw new Error(`Weather API HTTP error! Status: ${response.status}`);
-    }
-    return response.json();
-  })
-  .then((weatherData) => {
-    console.log("Weather Data:", weatherData);
-    displayWeather(weatherData);
-  })
-  .catch((error) => console.error("Error fetching weather data:", error));
+  if (cityName === "") {
+    alert("Please enter a city name");
+    return;
+  }
+
+  // Step 1: Make the current weather API request
+  const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric&lang=en`;
+
+  fetch(weatherUrl)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Weather API HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((weatherData) => {
+      console.log("Weather Data:", weatherData);
+      displayWeather(weatherData);
+    })
+    .catch((error) => console.error("Error fetching weather data:", error));
+});
 
 // Function to display the weather data on your page
 function displayWeather(data) {
